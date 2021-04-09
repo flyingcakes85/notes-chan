@@ -122,7 +122,12 @@ class _CreatePostPageState extends State<CreatePostPage> {
                       'body': postContent.text,
                       'author': userName.toUpperCase(),
                     };
-                    db.push().set(data).then((value) => print("stored"));
+                    db
+                        .push()
+                        .set(data,
+                            priority:
+                                (0 - DateTime.now().millisecondsSinceEpoch))
+                        .then((value) => print("stored"));
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                         backgroundColor: Color(0xff2c2c2c),
                         elevation: 8,

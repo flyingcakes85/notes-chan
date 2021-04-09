@@ -1,3 +1,5 @@
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:notes_chan/widgets/content_card.dart';
 
@@ -35,22 +37,38 @@ class _ContentState extends State<Content> {
     ]
   ];
 
+  final referenceDatabase = FirebaseDatabase.instance;
+
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: ListView.separated(
-        separatorBuilder: (BuildContext context, int index) {
-          return SizedBox(height: 9);
-        },
-        itemCount: sampleData.length,
-        itemBuilder: (context, index) {
-          return ContentCard(
-            postTopic: sampleData.elementAt(index).elementAt(0),
-            postAuthor: sampleData.elementAt(index).elementAt(1),
-            postContent: sampleData.elementAt(index).elementAt(2),
-          );
-        },
-      ),
-    );
+    DatabaseReference db = referenceDatabase.reference();
+    // return Expanded(
+    //   child: ListView.separated(
+    //     separatorBuilder: (BuildContext context, int index) {
+    //       return SizedBox(height: 9);
+    //     },
+    //     itemCount: sampleData.length,
+    //     itemBuilder: (context, index) {
+    //       return ContentCard(
+    //         postTopic: sampleData.elementAt(index).elementAt(0),
+    //         postAuthor: sampleData.elementAt(index).elementAt(1),
+    //         postContent: sampleData.elementAt(index).elementAt(2),
+    //       );
+    //     },
+    //   ),
+    // );
+
+    return Flexible(
+        child: FirebaseAnimatedList(
+      query: db,
+      itemBuilder: (BuildContext context, DataSnapshot snapshot,
+          Animation<double> animation, int index) {
+        return ContentCard(
+          postTopic: snapshot.value['course'],
+          postAuthor: snapshot.value['author'],
+          postContent: snapshot.value['body'],
+        );
+      },
+    ));
   }
 }
