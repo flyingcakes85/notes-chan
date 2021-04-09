@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:notes_chan/details.dart';
+import 'package:notes_chan/consts.dart';
 import 'package:notes_chan/screens/content.dart';
 import 'package:notes_chan/screens/createPost.dart';
 import 'package:notes_chan/screens/login.dart';
@@ -16,7 +16,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: Details.APP_NAME,
+      title: Consts.APP_NAME,
       theme: ThemeData(
         colorScheme: ColorScheme.dark(),
       ),
@@ -51,7 +51,7 @@ class HomeContent extends StatelessWidget {
         child: Icon(Icons.add),
       ),
       appBar: AppBar(
-        title: Text(Details.APP_NAME),
+        title: Text(Consts.APP_NAME),
         actions: [IconButton(icon: Icon(Icons.info_outline), onPressed: () {})],
       ),
       body: Container(

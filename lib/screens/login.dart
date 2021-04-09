@@ -1,6 +1,6 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:notes_chan/screens/createPost.dart';
 
 class LoginPage extends StatelessWidget {
   final FirebaseAuth auth = FirebaseAuth.instance;
@@ -109,6 +109,7 @@ Future<void> signInUser(BuildContext context) async {
             email: "barry.allen@example.com", password: "SuperSecretPassword");
     print("Sign in success");
     Navigator.pop(context);
+    Navigator.pushNamed(context, CreatePostPage.routeName);
   } on FirebaseAuthException catch (e) {
     if (e.code == 'user-not-found') {
       print('No user found for that email.');
