@@ -20,6 +20,9 @@ class LoginPage extends StatelessWidget {
 class LogInBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    TextEditingController _emailController = TextEditingController();
+    TextEditingController _passwordController = TextEditingController();
+
     return Container(
       padding: EdgeInsets.all(20),
       child: Column(
@@ -38,6 +41,7 @@ class LogInBody extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
             ),
             child: TextField(
+              controller: _emailController,
               decoration: InputDecoration(
                 border: InputBorder.none,
                 hintText: "Enter email",
@@ -53,6 +57,8 @@ class LogInBody extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
             ),
             child: TextField(
+              controller: _passwordController,
+              obscureText: true,
               decoration: InputDecoration(
                 border: InputBorder.none,
                 hintText: "Enter Password",
@@ -70,7 +76,8 @@ class LogInBody extends StatelessWidget {
               ),
               MaterialButton(
                 onPressed: () {
-                  signInUser(context);
+                  signInUser(
+                      context, _emailController.text, _passwordController.text);
                 },
                 color: Color(0xff2c2c2c),
                 child: Padding(
@@ -102,11 +109,11 @@ class LogInBody extends StatelessWidget {
   }
 }
 
-Future<void> signInUser(BuildContext context) async {
+Future<void> signInUser(
+    BuildContext context, String userEmail, String userPassword) async {
   try {
     UserCredential userCredential = await FirebaseAuth.instance
-        .signInWithEmailAndPassword(
-            email: "barry.allen@example.com", password: "SuperSecretPassword");
+        .signInWithEmailAndPassword(email: userEmail, password: userPassword);
     print("Sign in success");
     Navigator.pop(context);
     Navigator.pushNamed(context, CreatePostPage.routeName);
@@ -116,5 +123,7 @@ Future<void> signInUser(BuildContext context) async {
     } else if (e.code == 'wrong-password') {
       print('Wrong password provided for that user.');
     }
+  } catch (e) {
+    print(e.toString());
   }
 }
