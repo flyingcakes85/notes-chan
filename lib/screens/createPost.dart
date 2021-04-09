@@ -120,9 +120,26 @@ class _CreatePostPageState extends State<CreatePostPage> {
                     Map<String, String> data = {
                       'course': selectedCourse,
                       'body': postContent.text,
-                      'author': userName,
+                      'author': userName.toUpperCase(),
                     };
                     db.push().set(data).then((value) => print("stored"));
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        backgroundColor: Color(0xff2c2c2c),
+                        elevation: 8,
+                        content: Row(
+                          children: [
+                            Icon(
+                              Icons.done,
+                              color: Colors.green.shade200,
+                            ),
+                            SizedBox(width: 10),
+                            Text(
+                              "Post Created!",
+                              style: TextStyle(color: Colors.white),
+                            )
+                          ],
+                        )));
+                    postContent.clear();
                   },
                   color: Color(0xff2c2c2c),
                   child: Padding(
